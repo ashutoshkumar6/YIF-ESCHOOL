@@ -35,6 +35,7 @@ router.patch('/users/:id', async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
 
+    console.log(req.body.key);
     // facing issue here
     for (let key in req.body) {
         if (key !== "") {
