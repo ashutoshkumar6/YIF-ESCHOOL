@@ -6,8 +6,6 @@ const User = require('../models/user');
 router.get('/', async (req, res) => {
     if (req.session.user_id) {
         const user = await User.findById(req.session.user_id);
-        console.log(req.session.user_id);
-        console.log(user);
         res.render('home', { user: user });
     } else {
         res.render('home', { user: null });
