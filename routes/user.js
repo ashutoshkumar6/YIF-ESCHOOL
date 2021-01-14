@@ -4,12 +4,7 @@ const User = require('../models/user');
 
 
 router.get('/', async (req, res) => {
-    if (req.session.user_id) {
-        const user = await User.findById(req.session.user_id);
-        res.render('home', { user: user });
-    } else {
-        res.render('home', { user: null });
-    }
+    res.render('home');
 })
 
 router.get('/users', async (req, res) => {

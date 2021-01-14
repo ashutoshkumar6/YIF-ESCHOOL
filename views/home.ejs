@@ -10,16 +10,14 @@
     <h1>Home Page</h1>
     <a href="/users">View all users</a>
 
-    <% if (user) { %> 
-        <a href="/users/<%= user._id %>/edit">Edit Profile</a>
+    <% if (session_id) { %> 
+        <a href="/users/<%= session_id %>">View Profile</a>
+        <form action="/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    <% } else { %> 
+        <a href="/register">Sign Up</a>
+        <a href="/login">Login</a>
     <% } %> 
-
-    <a href="/register">Sign Up</a>
-
-    <a href="/login">Login</a>
-
-    <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-    </form>
 </body>
 </html>

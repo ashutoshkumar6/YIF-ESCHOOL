@@ -8,11 +8,16 @@
 <body>
     <h1><%= user.name %></h1>  
     <ul>
+        <li>Gender: <%= user.gender %></li>
         <li>Phone: <%= user.phone %></li>
         <li>Standard: <%= user.standard %></li>
         <li>Email: <%= user.email %></li>
         <li>Address: <%= user.address %></li>
     </ul>
+    <% if (session_id == user._id) { %> 
+        <a href="/users/<%= session_id %>/edit">Edit Profile</a>
+    <% } %> 
     <a href="/">Back to Home</a>
+    <a href="/users">Back to All Users</a>
 </body>
 </html>

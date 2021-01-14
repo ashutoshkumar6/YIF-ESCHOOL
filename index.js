@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/yifEschool', {
+mongoose.connect('mongodb://localhost:27017/eschool', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -34,7 +34,13 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7,
       }
 }));
-
+app.use(function (req, res, next) {
+    res.locals.session_id = req.session.user_id;
+    res.locals.genders = ["Male", "Female", "Other"],
+    res.locals.standards = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    next();
+})
+  
 app.use('/', userRoutes);
 
 app.get('/register', (req, res) => {
@@ -42,9 +48,9 @@ app.get('/register', (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-    const { name, phone, standard, address, email, password } = req.body;
+    const { name, gender, phone, address, standard, email, password } = req.body;
     const hash = await bcrypt.hash(password, 12);
-    const user = new User({ name, phone, standard, address, email, password });
+    const user = new User({ name, gender, phone, address, standard, email, password });
     await user.save();
 
     req.session.user_id = user._id;

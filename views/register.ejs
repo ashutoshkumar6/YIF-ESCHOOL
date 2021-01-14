@@ -13,15 +13,27 @@
             <input type="text" id="name" name="name" placeholder="name" required>
         </div>
         <div>
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender">
+                <% for (let gender of genders) { %> 
+                    <option value="<%= gender %>"><%= gender %></option>
+                <% } %> 
+            </select>
+        </div>
+        <div>
             <label for="phone">Phone:</label>
             <input type="tel" id="phone" name="phone" placeholder="phone" required>
         </div>
         <div>
+            <label for="address">Address:</label><br>
+            <textarea name="address" id="address" cols="30" rows="4" placeholder="Street, City"></textarea>
+        </div>
+        <div>
             <label for="standard">Standard:</label>
             <select name="standard" id="standard">
-                <option value="" disabled>Select your Standard</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                <% for (let standard of standards) { %> 
+                    <option value="<%= standard %>"><%= standard %></option>
+                <% } %> 
             </select>
         </div>
         <div>
