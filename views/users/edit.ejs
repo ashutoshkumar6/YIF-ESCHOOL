@@ -6,54 +6,37 @@
     <title>Edit Profile</title>
 </head>
 <body>
-   <h1>Edit Profile:</h1> 
-   <form action="/users/<%= user._id %>?_method=PATCH" method="post">
+    <h1>Edit Profile:</h1> 
+    <form action="/users/<%= user._id %>?_method=PATCH" method="post">
+        <h3><%= user.firstName %><%= user.lastName %></h3>  
         <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="name" value="<%= user.name %>" disabled>
-        </div>
-        <div>
-            <label for="gender">Gender:</label>
-            <select name="gender" id="gender">
-                <% for (let gender of genders) { %> 
-                    <% if (gender === user.gender) { %> 
-                        <option value="<%= gender %>" selected><%= gender %></option>
-                    <% } else { %> 
-                        <option value="<%= gender %>"><%= gender %></option>
-                    <% } %> 
-                <% } %> 
-            </select>
-        </div>
-        <div>
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" placeholder="phone" value="<%= user.phone %>">
-        </div>
-        <div>
-            <label for="address">Address:</label><br>
-            <textarea name="address" id="address" cols="30" rows="4" placeholder="<%= user.address %>"></textarea>
-        </div>
-        <div>
-            <label for="standard">Standard:</label>
-            <select name="standard" id="standard">
-                <% for (let standard of standards) { %> 
-                    <% if (standard === user.standard) { %> 
-                        <option value="<%= standard %>" selected><%= standard %></option>
-                    <% } else { %> 
-                        <option value="<%= standard %>"><%= standard %></option>
-                    <% } %> 
-                <% } %> 
-            </select>
+            <label for="mobileNo">MobileNo:</label>
+            <input type="text" id="mobileNo" name="mobileNo" placeholder="mobileNo" value="<%= user.mobileNo %>">
         </div>
         <div>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="email" value="<%= user.email %>">
         </div>
         <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="password">
+            <label for="password1">New Password:</label>
+            <input type="password" id="password1" name="password1" placeholder="password">
         </div>
-       <button type="submit">Save</button>
-   </form>
-   <a href="/">Back to Home</a>
+        <div>
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" placeholder="confirm password">
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <a href="/">Back to Home</a>
+    <script>
+        function validateForm() {
+            const password1 = document.forms["signupForm"]["password1"].value;
+            const password2 = document.forms["signupForm"]["password2"].value;
+            if (password1 !== password2) {
+            alert("Passwords dont match");
+            return false;
+            }
+        }
+    </script>
 </body>
 </html>

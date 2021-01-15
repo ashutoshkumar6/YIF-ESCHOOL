@@ -7,6 +7,7 @@ const session = require('express-session');
 
 const User = require('./models/user');
 const userRoutes = require('./routes/user');
+const paymentRoutes = require('./routes/checkout');
 
 const app = express();
 
@@ -24,6 +25,7 @@ db.once('open', () => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended : true }));
 app.use(methodOverride('_method'));
 app.use(session({ 
@@ -42,15 +44,17 @@ app.use(function (req, res, next) {
 })
   
 app.use('/', userRoutes);
+app.use('/', paymentRoutes);
 
 app.get('/register', (req, res) => {
     res.render('register');
 })
 
 app.post('/register', async (req, res) => {
-    const { name, gender, phone, address, standard, email, password } = req.body;
-    const hash = await bcrypt.hash(password, 12);
-    const user = new User({ name, gender, phone, address, standard, email, password });
+    const { fname, lname, mobileNo, email, password1 } = req.body;
+    console.log(req.body);
+    const hash = await bcrypt.hash(password1, 12);
+    const user = new User({ firstName: fname, lastName: lname, mobileNo: mobileNo, email: email, password: password1 });
     await user.save();
 
     req.session.user_id = user._id;

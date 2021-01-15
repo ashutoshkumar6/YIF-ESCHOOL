@@ -6,13 +6,10 @@
     <title>My Profile</title>
 </head>
 <body>
-    <h1><%= user.name %></h1>  
+    <h1><%= user.firstName %><%= user.lastName %></h1>  
     <ul>
-        <li>Gender: <%= user.gender %></li>
-        <li>Phone: <%= user.phone %></li>
-        <li>Standard: <%= user.standard %></li>
+        <li>Phone: <%= user.mobileNo %></li>
         <li>Email: <%= user.email %></li>
-        <li>Address: <%= user.address %></li>
     </ul>
     <% if (session_id == user._id) { %> 
         <a href="/users/<%= session_id %>/edit">Edit Profile</a>

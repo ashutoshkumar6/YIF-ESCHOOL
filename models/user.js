@@ -2,29 +2,19 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
         required: true
     },
-    gender: {
+    lastName: {
         type: String,
-        enum: ['Male', 'Female', 'Other'],
         required: true
     },
-    phone: {
+    mobileNo: {
         type: String,
         minLength: 10,
         maxLength: 10,
         required: true
-    },
-    standard: {
-        type: Number,
-        max: 10,
-        required: true
-    },
-    address: {
-        type: String,
-        maxlength: 150
     },
     email: {
         type: String,

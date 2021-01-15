@@ -27,13 +27,11 @@ router.get('/users/:id/edit', async (req, res) => {
 router.patch('/users/:id', async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
+    const { mobileNo, email, password1 } = req.body;
 
-    for (let key in req.body) {
-        if (req.body[key] !== "") {
-            const newValue = req.body[key];
-            user[key] = newValue;
-        }
-    }
+    if (mobileNo !== "")  user["mobileNo"] = mobileNo;
+    if (email !== "")  user["email"] = email;
+    if (password1 !== "")  user["password"] = password1;
     await user.save()
     res.redirect(`/users/${user._id}`);
 })
