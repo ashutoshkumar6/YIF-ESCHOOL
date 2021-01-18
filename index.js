@@ -4,10 +4,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const bodyParser = require('body-parser');
 
 const User = require('./models/user');
 const userRoutes = require('./routes/user');
-const paymentRoutes = require('./routes/checkout');
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
 
@@ -25,7 +26,6 @@ db.once('open', () => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended : true }));
 app.use(methodOverride('_method'));
 app.use(session({ 
@@ -44,7 +44,14 @@ app.use(function (req, res, next) {
 })
   
 app.use('/', userRoutes);
-app.use('/', paymentRoutes);
+app.use('/razorpay', paymentRoutes);
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+    res.render('home');
+})
 
 app.get('/register', (req, res) => {
     res.render('register');
@@ -61,11 +68,6 @@ app.post('/register', async (req, res) => {
     res.redirect('/');
 })
 
-
-app.get('/login', (req, res) => {
-    res.render('login');
-})
-
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const foundUser = await User.findAndValidate(email, password);
@@ -73,7 +75,7 @@ app.post('/login', async (req, res) => {
         req.session.user_id = foundUser._id;
         res.redirect('/');
     } else {
-        res.redirect('/login');
+        res.redirect('/register');
     }
 })
 

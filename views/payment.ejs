@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/razorpay/verification" method="post">
+        <button type="submit" id="rzp-button1">Pay</button>
+    </form>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        "key": "rzp_test_pLmedoBwg3DT9h",
+        "id": "<%= order.id %>",
+        "amount": "<%= order.amount %>",
+        "currency": "<%= order.currency %>",
+        "name": "Test Corp",
+        "description": "Test Transaction",
+        "handler": function (response){
+            alert(response.razorpay_payment_id);
+            alert(response.razorpay_order_id);
+            alert(response.razorpay_signature)
+        },
+        "prefill": {
+            "name": "Test User",
+            "email": "test.user@example.com",
+            "contact": "9999999999"
+        },
+    };
+    const paymentObject = new Razorpay(options);
+    paymentObject.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+        paymentObject.open();
+        e.preventDefault();
+    }
+    </script>
+</body>
+</html>
