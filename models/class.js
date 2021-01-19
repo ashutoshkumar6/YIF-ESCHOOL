@@ -13,8 +13,7 @@ const classSchema=new mongoose.Schema({
     },
     subject:[
         {
-            type: mongoose.Schema.Types.ObjectID,
-            ref: "Subject"
+            type: String
         }
     ]
 })

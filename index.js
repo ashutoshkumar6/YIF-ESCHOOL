@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const User = require('./models/user');
 const userRoutes = require('./routes/user');
 const paymentRoutes = require('./routes/payment');
+const courseRoutes=require('./routes/courses')
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use(function (req, res, next) {
   
 app.use('/', userRoutes);
 app.use('/razorpay', paymentRoutes);
+app.use('/courses',courseRoutes);
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.json());

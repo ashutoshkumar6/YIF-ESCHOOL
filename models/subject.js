@@ -13,8 +13,7 @@ const subjectSchema=new mongoose.Schema({
     },
     topic:[
         {
-            type: mongoose.Schema.Types.ObjectID,
-            ref: "Topic"
+            type: String
         }
     ]
 })
